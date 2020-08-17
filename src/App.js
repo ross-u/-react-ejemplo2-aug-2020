@@ -1,26 +1,51 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+// import countriesJSON from './countries.json';
+import ListItem from './components/ListItem';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  state = {
+    countries: []
+  }
+
+
+  getCountries = () => {
+    axios.get('https://countries.tech-savvy.tech/countries')
+      .then((response) => {
+        this.setState( { countries: response.data } )
+      })
+      .catch((err) => console.log(err))
+  } 
+
+  getCountriesAsync = async () => {
+    try {
+      const response = await axios.get('https://countries.tech-savvy.tech/countries');
+      this.setState( { countries: response.data } );
+    }
+    catch(err) {
+      console.log(err);
+    }
+  } 
+
+
+  // se ejecuta cuando el componente esta montado - creado y mostrado en DOM
+  componentDidMount() {
+    this.getCountriesAsync();
+  }
+
+
+  render() {
+    return (
+      <div className="App">
+        { this.state.countries.map( (countryObj) => {
+
+        return <ListItem countryObj={countryObj} />
+
+        }) }
+      </div>
+    );
+  }
 }
 
 export default App;
