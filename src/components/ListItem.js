@@ -5,8 +5,8 @@ import React from 'react'
 function ListItem(props) {
 
   const { countryObj } = props; // desestructurando countryObj desde los props
-  
-  return <p> {countryObj.name.common} - {countryObj.capital[0]}</p> 
+
+  return <p className="ListItem"> {countryObj.name.common} - {countryObj.capital[0]}</p> 
 }
 
 export default ListItem
