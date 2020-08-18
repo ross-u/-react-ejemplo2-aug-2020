@@ -24,12 +24,9 @@ main {
 
 main.dark {
   background-color: black;
-  padding: 20px;
 }
 
 .ListItem.dark {
-  margin-bottom: 20px;
-  padding: 5px 20px;
   border: 2px solid white;
   background-color: gray;
   color: white;

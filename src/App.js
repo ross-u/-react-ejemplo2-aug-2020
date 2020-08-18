@@ -4,6 +4,8 @@ import './App.css';
 import ListItem from './components/ListItem';
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
+import { Consumer } from './store/StyleContext';
+
 import axios from 'axios';
 
 class App extends React.Component {
@@ -11,7 +13,6 @@ class App extends React.Component {
     countries: [], // incluye todos los datos/paises
     countriesToShow: [] 
   }
-
 
   getCountries = () => {
     axios.get('https://countries.tech-savvy.tech/countries')
@@ -44,25 +45,32 @@ class App extends React.Component {
     // cuando lo tenemos listo, hay que pasar este metodo al SearchBar como un prop
   }
 
-
-  // se ejecuta cuando el componente esta montado - creado y mostrado en DOM
   componentDidMount() {
+    // se ejecuta cuando el componente esta montado - creado y mostrado en DOM
     this.getCountries();
   }
+
 
   render() {
     return (
       <div className="App">
         <Navbar/>
         <SearchBar filterCountries={this.filterCountries} />
-        <main>
+        <Consumer>
 
-          { this.state.countriesToShow.map( (countryObj) => {
+        { (value) => {
+          const { mode } = value;
 
-          return <ListItem key={countryObj.cca3} countryObj={countryObj} />
+          return(
+            <main className={mode}>
+            { this.state.countriesToShow.map( (countryObj) => {
+              return <ListItem key={countryObj.cca3} countryObj={countryObj} />
+            }) }
+          </main>
+          )
+        }}
 
-          }) }
-        </main>
+        </Consumer>
       </div>
     );
   }
