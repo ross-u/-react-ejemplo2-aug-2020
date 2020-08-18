@@ -1,7 +1,7 @@
 // Crear un componente con el state - componente de clase
 
 // desconectar el input y conectar lo con el state:
-//    poner onChage   y  value
+//    poner onChange   y  value
 
 import React from 'react';
 
